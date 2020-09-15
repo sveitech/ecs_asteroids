@@ -14,10 +14,11 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({inlineSource: '.(js)$'}),
+    new HtmlWebpackPlugin({inlineSource: '.(js)$', template: 'src/index.html'}),
     new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin)
   ],
   resolve: {
+    modules: ['./src'],
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
