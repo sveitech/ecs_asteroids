@@ -14,3 +14,7 @@ export function createComponentId(): number {
 export interface IComponent {
   readonly id: number;
 }
+
+export interface IComponentConstructor<T> extends IComponent {
+  new (...arg: any): T;
+}

@@ -16,4 +16,5 @@ import Position from "components/position";
 
   // Create player
   let player: Entity = registry.createEntity(new Position(100, 100));
+  registry.getEntities(Position);
 })();
