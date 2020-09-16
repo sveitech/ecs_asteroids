@@ -12,5 +12,5 @@ export function createComponentId(): number {
 }
 
 export interface IComponent {
- readonly id: number;
+  readonly id: number;
 }
