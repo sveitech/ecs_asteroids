@@ -4,7 +4,7 @@
  * components.
  */
 import { IComponent, IComponentConstructor } from "components/component";
-import Entity from "entity";
+import { Entity } from "entity";
 
 let nextEntityId: number = 0;
 
@@ -13,7 +13,7 @@ function createEntity() {
   return new Entity(nextEntityId);
 }
 
-export default class Registry {
+export class Registry {
   private entities: Map<number, Map<number, IComponent>> = new Map();
 
   createEntity(...components: IComponent[]): Entity {
@@ -62,20 +62,21 @@ export default class Registry {
     }
   }
 
-  *getEntities<T extends IComponent>(...components: T[]): Generator<T[], void> {
+  *getEntities<T extends IComponent[]>(
+    ...components: { [K in keyof T]: IComponentConstructor<T[K]> }
+  ): Generator<[...T], void> {
     for (let [key, value] of this.entities) {
-      let hits: number = 0;
+      let result: any[] = [];
 
       // If the entity has every component, return those components, grouped
       for (let [c_key, c_value] of components.entries()) {
         if (value.has(c_value.id)) {
-          hits += 1;
-          components[c_key] = value.get(c_value.id) as typeof c_value;
+          result.push(value.get(c_value.id) as typeof c_value);
         }
       }
 
-      if (hits == components.length) {
-        yield components;
+      if (components.length == result.length) {
+        yield result as [...T];
       }
     }
   }

@@ -1,7 +1,7 @@
-import Registry from "registry";
+import { Registry } from "registry";
 import { IComponent } from "components/component";
-import Position from "components/position";
-import Velocity from "components/velocity";
+import { Position } from "components/position";
+import { Velocity } from "components/velocity";
 
 test("add entity to register", () => {
   let registry = new Registry();

@@ -3,7 +3,7 @@
  * is added to the element given in the constructor.
  */
 
-export default class Canvas {
+export class Canvas {
   private canvas: HTMLCanvasElement;
   private _context: CanvasRenderingContext2D;
 

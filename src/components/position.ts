@@ -7,7 +7,7 @@
 
 import { createComponentId, IComponent } from "components/component";
 
-export default class Position implements IComponent {
+export class Position implements IComponent {
   static readonly id: number = createComponentId();
 
   constructor(public x: number = 0, public y: number = 0) {}

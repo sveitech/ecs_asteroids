@@ -235,3 +235,13 @@ at moduleDirectories indeholder både node_modules og ens egne sources.
     }
   }
 ```
+
+### 20-09-2020
+
+Undgå default exports! De ødelægger directory imports. Hvis man har en index.js
+fil i en undermappe, hvor man exporter hele undermappen:
+
+  export * from "./foo";
+
+Dette virker ikke med default exports. Man skal manuelt hen og re-exporte
+default exporten.
