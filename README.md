@@ -245,3 +245,63 @@ fil i en undermappe, hvor man exporter hele undermappen:
 
 Dette virker ikke med default exports. Man skal manuelt hen og re-exporte
 default exporten.
+
+### 24-09-2020
+
+Har fået tegnet spiller-skibet. Det virker bedre når centrum for skibet er
+1/3 fra "bunden" af trekanten, i stedet for 1/2, altså det korrekte centrum.
+Der opstår en optisk illusion, ala.
+
+  <-> >-<
+
+de to linier ser ud til at have forskellig længde. Det er det samme der sker
+når man tegner spilleren som en trekant.
+
+---
+
+Timing tests viser at jeg kan opdatere rotation og physics for 5000 entities
+på 12ms. Hvis jeg sætter rendering ind også, kan jeg ikke tegne meget mere
+end 100 entities, før både rendering tiden og time since last frame tager
+mere end 20ms! Det ser ud til at frame raten begynder at skride først, før
+jeg bruger alle 16ms på at tegne.
+
+Prøver at arbejde mig igennem disse performance optimeringer:
+
+  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas
+
+Forsøg 1: Offscreen Rendering.
+
+Tager udgangspunkt i 300 renderede entities.
+
+  Render Time: ~47ms
+  Frame Interval: ~115ms
+
+Tider efter offscreen rendering:
+
+  100ms for begge. Dette viste sig at have værre performance.
+
+Forsøg 2: Lav kun 1 kald til stroke()
+
+Dette ser ud til at give et gigantisk boost!
+
+  Render Time: ~2ms
+  Frame Interval: ~16ms
+
+I render.ts, nøjes jeg bare med at kalde stroke() funktionen til aller sidst.
+Det batch-processer alle de kald man har lavet til beginPath(), lineTo(), e.t.c.
+
+1000 entities:
+
+  Render Time: ~6ms
+  Frame Interval: ~16ms
+
+2000 entities:
+
+  Render Time: ~13ms
+  Frame Interval: ~16ms
+
+Forsøg 3: No alpha og no subpixels
+
+Giver ikke nogen synlig forbedring.
+
+---

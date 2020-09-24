@@ -11,7 +11,7 @@ export class Canvas {
     this.canvas = document.createElement("canvas");
     this.canvas.width = containerElement.clientWidth;
     this.canvas.height = containerElement.clientHeight;
-    this._context = this.canvas.getContext("2d");
+    this._context = this.canvas.getContext("2d", { alpha: false });
 
     console.log(this.canvas.width);
 
@@ -20,5 +20,18 @@ export class Canvas {
 
   context(): CanvasRenderingContext2D {
     return this._context;
+  }
+
+  width(): number {
+    return this.canvas.width;
+  }
+
+  height(): number {
+    return this.canvas.height;
+  }
+
+  clear(): void {
+    this._context.fillStyle = "white";
+    this._context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }

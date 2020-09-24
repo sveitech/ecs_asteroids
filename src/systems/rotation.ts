@@ -2,15 +2,16 @@ import { Registry } from "registry";
 import { Canvas } from "canvas";
 import * as components from "components";
 
-export class PlayerRender {
+export class Rotation {
   constructor(private registry: Registry) {}
 
   update() {
     for (let entity of this.registry.getEntities(
-      components.Player,
-      components.Position
+      components.Orientation,
+      components.Rotation
     )) {
-      let [_, position] = entity;
+      let [orientation, rotation] = entity;
+      orientation.degrees += rotation.rotationSpeed;
     }
   }
 }
